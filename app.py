@@ -1,5 +1,5 @@
 from sklearn.metrics import precision_score, recall_score
-from sklearn.metrics import plot_confusion_matrix, plot_roc_curve, plot_precision_recall_curve
+from sklearn.metrics import ConfusionMatrixDisplay, RocCurveDisplay, PrecisionRecallDisplay
 from sklearn.datasets import load_breast_cancer
 from sklearn.neighbors import KNeighborsClassifier
 import streamlit as st
@@ -69,7 +69,7 @@ plt.title("2-D PCA Visualization")
 st.pyplot(fig)
 
 # 3-D PCA
-fig2 = plt.figure(figsize=(16, 10)).gca(projection='3d')
+fig2 = plt.figure(figsize=(16, 10)).add_subplot(projection='3d')
 fig2.scatter(
     xs=df["pca-1"],
     ys=df["pca-2"],
@@ -106,13 +106,13 @@ if classifier == 'SVM':
     train_score = round(model.score(X_train, y_train), 2)
     accuracy = test_score
     y_pred = model.predict(X_test)
-    st.write("Accuracy: ", accuracy.round(2))
-    st.write("Precision: ", precision_score(
-        y_test, y_pred, labels=classes).round(2))
-    st.write("Recall: ", recall_score(y_test, y_pred, labels=classes).round(2))
+    st.write("Accuracy: ", round(accuracy, 2))
+    st.write("Precision: ", round(precision_score(
+        y_test, y_pred, labels=classes), 2))
+    st.write("Recall: ", round(recall_score(y_test, y_pred, labels=classes), 2))
     # The below code will plot confusion matrix for SVM
     st.subheader("ROC Curve")
-    plot_roc_curve(model, X_test, y_test)
+    RocCurveDisplay.from_estimator(model, X_test, y_test)
     st.set_option('deprecation.showPyplotGlobalUse', False)
     st.pyplot()
 
@@ -131,7 +131,7 @@ elif classifier == 'KNN':
     st.write("Recall: ", recall_score(y_test, y_pred, labels=classes).round(2))
     # The below code will plot confusion matrix for KNN
     st.subheader("ROC Curve")
-    plot_roc_curve(model, X_test, y_test)
+    RocCurveDisplay.from_estimator(model, X_test, y_test)
     st.set_option('deprecation.showPyplotGlobalUse', False)
     st.pyplot()
 
