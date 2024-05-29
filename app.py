@@ -125,10 +125,10 @@ elif classifier == 'KNN':
     train_score = round(model.score(X_train, y_train), 2)
     accuracy = test_score
     y_pred = model.predict(X_test)
-    st.write("Accuracy: ", accuracy.round(2))
-    st.write("Precision: ", precision_score(
-        y_test, y_pred, labels=classes).round(2))
-    st.write("Recall: ", recall_score(y_test, y_pred, labels=classes).round(2))
+    st.write("Accuracy: ", round(accuracy, 2))
+    st.write("Precision: ", round(precision_score(
+        y_test, y_pred, labels=classes), 2))
+    st.write("Recall: ", round(recall_score(y_test, y_pred, labels=classes), 2))
     # The below code will plot confusion matrix for KNN
     st.subheader("ROC Curve")
     RocCurveDisplay.from_estimator(model, X_test, y_test)
